@@ -1,0 +1,10 @@
+target
+bin
+.settings
+.project
+.classpath
+test-output
+*.jsfdia
+irajblank-web/src/main/resources/META-INF/persistence.xml
+irajblank-web/src/main/resources/META-INF/context.xml
+*~

@@ -1,0 +1,127 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.iorga</groupId>
+	<artifactId>bblorganizer-parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>BBL Organizer - Parent</name>
+	<packaging>pom</packaging>
+
+
+	<properties>
+		<!-- Project globals -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.7</java.version>
+
+		<!-- artifact versions -->
+		<version.iraj>2.0.1-SNAPSHOT</version.iraj>
+		<version.jdbi>2.53</version.jdbi>
+		<version.deltaspike>0.7</version.deltaspike>
+		<version.liquibase>3.1.1</version.liquibase>
+
+		<!-- IRAJ Blank properties -->
+		<irajblank.debug>true</irajblank.debug>
+
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>env-prod</id>
+			<activation>
+				<property>
+					<name>env</name>
+					<value>prod</value>
+				</property>
+			</activation>
+			<properties>
+				<irajblank.debug>false</irajblank.debug>
+			</properties>
+		</profile>
+	</profiles>
+
+	<modules>
+		<module>../iraj-bom</module>
+		<module>../irajblank-web</module>
+	</modules>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+						<encoding>${project.build.sourceEncoding}</encoding>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>2.5</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.17</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>2.6</version>
+				</plugin>
+				<plugin>
+					<groupId>com.mysema.maven</groupId>
+					<artifactId>apt-maven-plugin</artifactId>
+					<version>1.1.1</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<scm>
+		<connection>scm:git:file://../</connection>
+		<developerConnection>scm:git:file://../</developerConnection>
+		<url>scm:git:file://../</url>
+	</scm>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Import -->
+			<dependency>
+				<groupId>com.iorga</groupId>
+				<artifactId>iraj-bom</artifactId>
+				<version>${version.iraj}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			<!-- Compile -->
+			<dependency>
+				<groupId>org.jdbi</groupId>
+				<artifactId>jdbi</artifactId>
+				<version>${version.jdbi}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.deltaspike.modules</groupId>
+				<artifactId>deltaspike-servlet-module-api</artifactId>
+				<version>${version.deltaspike}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.liquibase</groupId>
+				<artifactId>liquibase-cdi</artifactId>
+				<version>${version.liquibase}</version>
+			</dependency>
+			<!-- Runtime -->
+			<dependency>
+				<groupId>org.apache.deltaspike.modules</groupId>
+				<artifactId>deltaspike-servlet-module-impl</artifactId>
+				<version>${version.deltaspike}</version>
+				<type>jar</type>
+				<scope>runtime</scope>
+			</dependency>
+			<!-- Provided -->
+			<!-- Test -->
+		</dependencies>
+	</dependencyManagement>
+</project>

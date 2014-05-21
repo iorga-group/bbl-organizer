@@ -1,0 +1,23 @@
+@import '../../webapp/lib/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap.scss';
+
+a {
+	color: #00B7FF;
+}
+
+.pagination ul > .disabled > a, 
+	.pagination ul > .disabled > a:hover,
+	.pagination ul > .disabled > a:focus{
+	background-color: #999999;
+	color: white;
+}
+
+table.table tr td a.selectFullLine {
+	// thanks to http://stackoverflow.com/a/1461009/535203
+	display:inline-block;
+	height:100%;
+	width:100%;
+}
+
+tr.achieved {
+	background-color: #999999;
+}

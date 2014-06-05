@@ -1,25 +1,32 @@
 <div class="container-fluid">
 	<div class="row">
-		<form class="col-md-12">
-			<input id="filter" placeholder="Filtre" class="form-control">
-		</form>
-		<table ng-table="tableParams" class="col-md-12 table table-bordered table-condensed table-hover">
-			<tr ng-repeat="session in $data" ng-class="session.achieved ? 'achieved' : ''">
-				<td data-title="'Bagger'" sortable="'bagger.name'">{{session.bagger.name}}</td>
-				
-				<td data-title="'Titre'" sortable="'title'" >{{session.title}}</td>
-				<td data-title="'Résumé'" sortable="'summary'" >{{session.summary}}</td>
-				<td data-title="'Tags'" sortable="'tags'" >{{session.tags}}</td>				
-				<td data-title="'Actions'">
-					<button type="button" class="btn btn-default" ng-hide="session.voted" ng-click="vote(session)" ng-disabled="session.achieved">
-						<span class="glyphicon glyphicon-heart-empty"></span> Ça m'intéresse !
-					</button>
-					<button type="button" class="btn btn-default" ng-show="session.voted" ng-click="unvote(session)" ng-disabled="session.achieved">
-						<span class="glyphicon glyphicon-heart"></span> Ça ne m'intéresse plus !
-					</button>
-				</td>
-				
-			</tr>
-		</table>
+		<div class="col-md-12">
+			<form>
+				<input id="filter" placeholder="Filtre" class="form-control" ng-model="sessionsFilter">
+			</form>
+		</div>
+	</div>
+	<br/>
+	<div class="row">
+		<div class="col-md-12">
+			<table ng-table="tableParams" class="table table-bordered table-condensed table-hover">
+				<tr ng-repeat="session in $data" ng-class="session.achieved ? 'achieved' : ''">
+					<td data-title="'Bagger'" sortable="'baggerName'">{{session.baggerName}}</td>
+					
+					<td data-title="'Titre'" sortable="'title'" >{{session.title}}</td>
+					<td data-title="'Résumé'" sortable="'summary'" >{{session.summary}}</td>
+					<td data-title="'Tags'" sortable="'tags'" >{{session.tags}}</td>				
+					<td data-title="'Actions'">
+						<button type="button" class="btn btn-default" ng-hide="session.voted" ng-click="vote(session)" ng-disabled="session.achieved">
+							<span class="glyphicon glyphicon-heart-empty"></span> Ça m'intéresse !
+						</button>
+						<button type="button" class="btn btn-default" ng-show="session.voted" ng-click="unvote(session)" ng-disabled="session.achieved">
+							<span class="glyphicon glyphicon-heart"></span> Ça ne m'intéresse plus !
+						</button>
+					</td>
+					
+				</tr>
+			</table>
+		</div>
 	</div>
 </div>

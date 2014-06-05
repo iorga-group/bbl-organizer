@@ -7,10 +7,10 @@ angular.module('bblorganizer', [
 		'raaj-message-service',
 		'raaj-progress-interceptor',
 	])
-	.config(function (irajProgressInterceptorProvider) {
-		irajProgressInterceptorProvider.setDefaultMessage('Chargement en cours...');
+	.config(function (raajProgressInterceptorProvider) {
+		raajProgressInterceptorProvider.setDefaultMessage('Chargement en cours...');
 	})
-	.config(function (irajMessageServiceProvider) {
-		irajMessageServiceProvider.setBootstrapVersion('3.x');
+	.config(function (raajMessageServiceProvider) {
+		raajMessageServiceProvider.setBootstrapVersion('3.x');
 	})
 ;

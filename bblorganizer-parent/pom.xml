@@ -17,9 +17,8 @@
 		<version.jdbi>2.53</version.jdbi>
 		<version.deltaspike>0.7</version.deltaspike>
 		<version.liquibase>3.1.1</version.liquibase>
-
-		<!-- IRAJ Blank properties -->
-		<irajblank.debug>true</irajblank.debug>
+		
+		<bblorganizer.debug>true</bblorganizer.debug>
 
 	</properties>
 
@@ -33,7 +32,7 @@
 				</property>
 			</activation>
 			<properties>
-				<irajblank.debug>false</irajblank.debug>
+				<bblorganizer.debug>false</bblorganizer.debug>
 			</properties>
 		</profile>
 	</profiles>

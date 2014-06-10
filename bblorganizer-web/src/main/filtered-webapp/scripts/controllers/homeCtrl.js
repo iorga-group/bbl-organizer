@@ -28,11 +28,24 @@ angular.module('bblorganizer').controller('HomeCtrl', function ($scope, $http, $
 	eval(baggersFile); // root with "var data = {baggers: [...
 	var baggers = data.baggers;
 	*/
+
+	var combining = /[\u0300-\u036F]/g; // Use XRegExp('\\p{M}', 'g');
+	function toSearchable(text) {
+		return unorm.nfd(text).replace(combining, '').toLowerCase();
+	}
 	
 	angular.forEach(data.baggers, function(bagger) {
 		angular.forEach(bagger.sessions, function(session) {
 			session.baggerName = bagger.name;
 			session.tags = bagger.tags.join(', ');
+			
+			// create the search field for "sessionsFilter"
+			session.searchableText =
+				toSearchable(session.baggerName)+':'+
+				toSearchable(session.title)+':'+
+				toSearchable(session.summary)+':'+
+				toSearchable(session.tags);
+			
 			sessions.push(session);
 			
 			sessionsPerKey[bagger.name+':'+session.title] = session;
@@ -77,19 +90,13 @@ angular.module('bblorganizer').controller('HomeCtrl', function ($scope, $http, $
 	var firstTime = true;
 	$scope.$watch('sessionsFilter', function(sessionsFilter) {
 		if (!firstTime) { // ignore first time because ng-table doesn't like .reload() on first time...
-			var upperCaseSessionsFilter = sessionsFilter ? sessionsFilter.toUpperCase() : null;
+			var searchableSessionsFilter = sessionsFilter ? toSearchable(sessionsFilter) : null;
 			// filter on sessions with the filter input
 			filteredSessions = $filter('filter')(sessions, function(session) {
-				function containsIgnoreCase(value) {
-					return value ? value.toUpperCase().indexOf(upperCaseSessionsFilter) > -1 : false;
-				}
-				return !upperCaseSessionsFilter ||
-					containsIgnoreCase(session.baggerName) ||
-					containsIgnoreCase(session.title) ||
-					containsIgnoreCase(session.summary) ||
-					containsIgnoreCase(session.tags);
+				return searchableSessionsFilter ? session.searchableText.indexOf(searchableSessionsFilter) > -1 : true;
 			});
 			$scope.tableParams.total(filteredSessions.length);
+			$scope.tableParams.page(1);
 			$scope.tableParams.reload();
 		} else {
 			firstTime = false;

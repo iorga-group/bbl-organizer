@@ -18,11 +18,11 @@ import com.iorga.bblorganizer.service.VoteService;
 public class VotesWS {
 	@Inject
 	private VoteService voteService;
-	
+
 	public static class VotesVoteRequest {
 		private String baggerName;
 		private String sessionTitle;
-		
+
 		public String getBaggerName() {
 			return baggerName;
 		}
@@ -41,16 +41,23 @@ public class VotesWS {
 	public void vote(@Context HttpServletRequest httpRequest, VotesVoteRequest request) {
 		voteService.create(request.getBaggerName(), request.getSessionTitle(), httpRequest.getUserPrincipal().getName());
 	}
-	
+
 	@POST
 	@Path("/unvote")
 	public void unvote(@Context HttpServletRequest httpRequest, VotesVoteRequest request) {
 		voteService.delete(request.getBaggerName(), request.getSessionTitle(), httpRequest.getUserPrincipal().getName());
 	}
-	
+
+	//TODO not used
 	@GET
-	@Path("")
+	@Path("/mine")
 	public List<Vote> listVotesForCurrentUser(@Context HttpServletRequest httpRequest) {
 		return voteService.findForUserName(httpRequest.getUserPrincipal().getName());
+	}
+
+	@GET
+	@Path("/list")
+	public List<Vote> listAllVotes() {
+		return voteService.findAll();
 	}
 }

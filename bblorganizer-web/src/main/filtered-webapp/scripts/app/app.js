@@ -6,6 +6,7 @@ angular.module('bblorganizer', [
 		'raaj-message-interceptor',
 		'raaj-message-service',
 		'raaj-progress-interceptor',
+		'mgcrea.ngStrap'
 	])
 	.config(function (raajProgressInterceptorProvider) {
 		raajProgressInterceptorProvider.setDefaultMessage('Chargement en cours...');

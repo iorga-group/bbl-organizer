@@ -42,9 +42,14 @@ public class VoteService {
 		@SqlUpdate("delete from VOTE where BAGGER_NAME = :baggerName and SESSION_TITLE = :sessionTitle and USER_NAME = :userName")
 		void deleteVote(@Bind("baggerName") String baggerName, @Bind("sessionTitle") String sessionTitle, @Bind("userName") String userName);
 
+		//TODO not used
 		@SqlQuery("select * from VOTE where USER_NAME = :userName")
 		@Mapper(VoteMapper.class)
 		List<Vote> findForUsername(@Bind("userName") String userName);
+
+		@SqlQuery("select * from VOTE")
+		@Mapper(VoteMapper.class)
+		List<Vote> findAll();
 	}
 
 	public void create(String baggerName, String sessionTitle, String userName) {
@@ -61,10 +66,18 @@ public class VoteService {
 		}
 	}
 
+	//TODO not used
 	public List<Vote> findForUserName(String userName) {
 		try (Handle handle = dbi.open()) {
 			Queries queries = handle.attach(Queries.class);
 			return queries.findForUsername(userName);
+		}
+	}
+
+	public List<Vote> findAll() {
+		try (Handle handle = dbi.open()) {
+			Queries queries = handle.attach(Queries.class);
+			return queries.findAll();
 		}
 	}
 

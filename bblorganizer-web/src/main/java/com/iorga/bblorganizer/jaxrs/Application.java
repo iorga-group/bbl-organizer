@@ -1,4 +1,4 @@
-package com.iorga.bblorganizer.ws;
+package com.iorga.bblorganizer.jaxrs;
 
 import javax.ws.rs.ApplicationPath;
 

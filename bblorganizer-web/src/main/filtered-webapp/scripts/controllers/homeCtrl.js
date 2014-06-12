@@ -1,18 +1,26 @@
 'use strict';
 
-angular.module('bblorganizer').controller('HomeCtrl', function ($scope, $http, $filter, ngTableParams) {
-	//TODO implémenter le filtre
+angular.module('bblorganizer').controller('HomeCtrl', function ($scope, $http, $filter, ngTableParams, authenticationService) {
+
+	function updateVotes(session) {
+		session.voted = session.votes[authenticationService.userPrincipal().name]; // true if I have voted
+		var voters = Object.keys(session.votes);
+		session.voterNames = Object.keys(session.votes).join(', ');
+		session.voterNumber = voters.length;
+	}
 	
 	//scope definition
 	$scope.vote = function(session) {
 		$http.post('api/votes/vote', {baggerName: session.baggerName, sessionTitle: session.title}).success(function() {
-			session.voted = true;
+			session.votes[authenticationService.userPrincipal().name] = true;
+			updateVotes(session);
 		});
 	};
 	
 	$scope.unvote = function(session) {
 		$http.post('api/votes/unvote', {baggerName: session.baggerName, sessionTitle: session.title}).success(function() {
-			session.voted = false;
+			delete session.votes[authenticationService.userPrincipal().name];
+			updateVotes(session);
 		});
 	};
 	
@@ -38,6 +46,8 @@ angular.module('bblorganizer').controller('HomeCtrl', function ($scope, $http, $
 		angular.forEach(bagger.sessions, function(session) {
 			session.baggerName = bagger.name;
 			session.tags = bagger.tags.join(', ');
+			session.votes = {}; // field : username, value : true
+			session.voterNumber = 0;
 			
 			// create the search field for "sessionsFilter"
 			session.searchableText =
@@ -52,11 +62,12 @@ angular.module('bblorganizer').controller('HomeCtrl', function ($scope, $http, $
 		});
 	});
 
-	$http.get('api/votes').success(function(votes) {
+	$http.get('api/votes/list').success(function(votes) {
 		angular.forEach(votes, function(vote) {
 			var session = sessionsPerKey[vote.baggerName+':'+vote.sessionTitle];
 			if (session) {
-				session.voted = true;
+				session.votes[vote.userName] = true;
+				updateVotes(session);
 			}
 		});
 	});
@@ -102,4 +113,6 @@ angular.module('bblorganizer').controller('HomeCtrl', function ($scope, $http, $
 			firstTime = false;
 		}
 	});
+	
+	$scope.popoverContent = '{{session.voterNames}}';
 });

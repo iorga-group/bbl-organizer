@@ -24,7 +24,9 @@
 							<span class="glyphicon glyphicon-heart"></span> Ça ne m'intéresse plus !
 						</button>
 					</td>
-					
+					<td data-title="'Votes'" sortable="'voterNumber'">
+						<div bs-popover data-content="'{{session.voterNames}}'" data-trigger="hover">{{session.voterNumber}}</div>
+					</td>
 				</tr>
 			</table>
 		</div>

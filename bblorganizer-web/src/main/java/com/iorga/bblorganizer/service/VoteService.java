@@ -36,7 +36,7 @@ public class VoteService {
 	}
 
 	private static interface Queries {
-		@SqlUpdate("insert into VOTE(BAGGER_NAME, SESSION_TITLE, USER_NAME) values (:baggerName, :sessionTitle, :userName)")
+		@SqlUpdate("insert into VOTE(BAGGER_NAME, SESSION_TITLE, USER_NAME, VOTE_DATE) values (:baggerName, :sessionTitle, :userName, now())")
 		void insertVote(@Bind("baggerName") String baggerName, @Bind("sessionTitle") String sessionTitle, @Bind("userName") String userName);
 
 		@SqlUpdate("delete from VOTE where BAGGER_NAME = :baggerName and SESSION_TITLE = :sessionTitle and USER_NAME = :userName")

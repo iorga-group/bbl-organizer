@@ -24,6 +24,16 @@ angular.module('bblorganizer').controller('HomeCtrl', function ($scope, $http, $
 		});
 	};
 	
+	$scope.downloadCSV = function() {
+		var csvStr = 'Bagger;Titre;Nb votes;Votants\n',
+			sessions = $scope.sessions;
+		angular.forEach(sessions, function(session) {
+			csvStr += session.baggerName + ';' + session.title + ';' + session.voterNumber + ';' + session.voterNames + '\n';
+		});
+		var blob = new Blob([csvStr], {type: 'text/csv;charset=utf-8'});
+		saveAs(blob, 'bbl_'+new Date().getTime()+'.csv');
+	};
+	
 	//initialization
 	
 	var sessions = [];
@@ -48,6 +58,7 @@ angular.module('bblorganizer').controller('HomeCtrl', function ($scope, $http, $
 			session.tags = bagger.tags.join(', ');
 			session.votes = {}; // field : username, value : true
 			session.voterNumber = 0;
+			session.voterNames = '';
 			
 			// create the search field for "sessionsFilter"
 			session.searchableText =

@@ -2,6 +2,7 @@
 
 angular.module('bblorganizer', [
 		'ngRoute',
+		'ngSanitize',
 		'ngTable',
 		'raaj-message-interceptor',
 		'raaj-message-service',

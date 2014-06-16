@@ -1,5 +1,6 @@
 $icon-font-path: '../lib/bootstrap-sass-official/vendor/assets/fonts/bootstrap/';
 @import '../../webapp/lib/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap.scss';
+@import '../../webapp/lib/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap/_theme.scss';
 
 a {
 	color: #00B7FF;
@@ -22,3 +23,18 @@ table.table tr td a.selectFullLine {
 tr.achieved {
 	background-color: #999999;
 }
+
+.form-control {
+	width: 60%;
+	float: right;
+	margin-right: 5%;
+	margin-top: 1%;
+}
+
+.navbar {
+	background: #90AF16 url('../images/logo.png') 0 0 no-repeat;
+	height:20px;
+	background-size: contain;
+	
+}
+

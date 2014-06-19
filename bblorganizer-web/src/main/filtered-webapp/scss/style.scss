@@ -2,6 +2,13 @@ $icon-font-path: '../lib/bootstrap-sass-official/vendor/assets/fonts/bootstrap/'
 @import '../../webapp/lib/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap.scss';
 @import '../../webapp/lib/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap/_theme.scss';
 
+
+body {
+	 background: #eee;
+	 font-weight: normal;
+	 font-family: "Open Sans","Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
 a {
 	color: #00B7FF;
 }
@@ -20,21 +27,120 @@ table.table tr td a.selectFullLine {
 	width:100%;
 }
 
+header {
+	background: #90af16;
+	border-top: 1px solid #2b3c4e;
+	border-bottom: 1px solid #2b3c4e;
+	padding: 20px 0;
+	margin-bottom: 20px;
+}
+
 tr.achieved {
 	background-color: #999999;
 }
 
 .form-control {
-	width: 60%;
-	float: right;
-	margin-right: 5%;
-	margin-top: 1%;
-}
-
-.navbar {
-	background: #90AF16 url('../images/logo.png') 0 0 no-repeat;
-	height:20px;
-	background-size: contain;
+	display: block;
+	width: 100%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	color: black;
+	background-color: #BAD15B;
+	background-image: none;
+	border: none;
+	border-radius: 4px;
 	
 }
+
+.form-control::-webkit-input-placeholder {
+   color: grey;
+}
+
+.form-control:-moz-placeholder { /* Firefox 18- */
+   color: grey;  
+}
+
+.form-control::-moz-placeholder {  /* Firefox 19+ */
+   color: grey;  
+}
+
+.form-control:-ms-input-placeholder {  
+   color: grey;  
+}
+
+.logo{
+	height: 140px;
+	text-align: center;
+}
+
+.row{
+	margin-left: -15px;
+	margin-right: -15px;
+}
+
+.title {
+	color: #fff;
+	font-size: 50px;
+	display:inline-block;
+	vertical-align: middle;
+	margin-left: 2%;
+}
+
+th {
+	background-color: #90af16;
+	color: white;
+}
+
+header input[type=search], header input[type=search]:focus {
+	height: 100%;
+	font-size: 18px;
+	padding: 12px 20px 12px 10px;
+	font-weight: 400;
+	border: 1px solid white;
+}
+
+/* tables */
+table.tablesorter {
+    background-color:#BAD15B;
+    margin:10px 0pt 15px;
+    width: 100%;
+    text-align: left;
+}
+
+
+table.tablesorter tbody td {
+    color: #3D3D3D;
+    padding: 4px;
+    background-color: #FFF;
+    vertical-align: top;
+}
+table.tablesorter tbody tr.odd td {
+    background-color:#BAD15B;
+}
+
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+background-color: #BAD15B;
+}
+
+table .header:after {
+  content: "";
+  float: right;
+  margin-top: 7px;
+  border-width: 0 4px 4px;
+  border-style: solid;
+  border-color: #000000 transparent;
+  visibility: hidden;
+}
+
+table .headerSortUp, table .headerSortDown {
+  background-color: #BAD15B;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+}
+
+/*
+.ng-table th.sortable.sort-desc, .ng-table th.sortable.sort-asc {
+background-color: #BAD15B;
+text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+}*/
 

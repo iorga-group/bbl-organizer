@@ -1,34 +1,61 @@
-<div class="container-fluid">
-	<div class="row">
-		<div class="navbar">
-			<form>
-				<input id="filter" placeholder="Filtre" class="form-control" ng-model="sessionsFilter">
-			</form>
+<header>
+	<div class="container">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="logo">
+					<img src="images/logo.png" width="120" height="120"/>
+					<div class="title">Brown Bag Lunch</div>
+					
+				</div>
+				
+			</div>
+		
+
+			<div class="row">
+				<form>
+					<input id="filter" placeholder="Filtre" class="form-control"
+						type="search" ng-model="sessionsFilter" autofocus="autofocus" >
+				</form>
+			</div>
 		</div>
 	</div>
-	<br/>
-	<div class="row">
-		<div class="col-md-12">
-			<table ng-table="tableParams" class="table table-bordered table-condensed table-hover">
-				<tr ng-repeat="session in $data" ng-class="session.achieved ? 'achieved' : ''">
-					<td data-title="'Bagger'" sortable="'baggerName'">{{session.baggerName}}</td>
-					
-					<td data-title="'Titre'" sortable="'title'" >{{session.title}}</td>
-					<td data-title="'Résumé'" sortable="'summary'"><div ng-bind-html="session.summary"></div></td>
-					<td data-title="'Tags'" sortable="'tags'" >{{session.tags}}</td>				
-					<td data-title="'Actions'">
-						<button type="button" class="btn btn-default" ng-hide="session.voted" ng-click="vote(session)" ng-disabled="session.achieved">
-							<span class="glyphicon glyphicon-heart-empty"></span> Ça m'intéresse !
-						</button>
-						<button type="button" class="btn btn-default" ng-show="session.voted" ng-click="unvote(session)" ng-disabled="session.achieved">
-							<span class="glyphicon glyphicon-heart"></span> Ça ne m'intéresse plus !
-						</button>
-					</td>
-					<td data-title="'Votes'" sortable="'voterNumber'">
-						<div bs-popover data-content="'{{session.voterNames}}'" data-trigger="hover">{{session.voterNumber}}</div>
-					</td>
-				</tr>
-			</table>
+</header>
+<div class="container">
+	<div class="container-fluid">
+		<br />
+		<div class="row">
+			<div class="col-md-12">
+				<table ng-table="tableParams"
+					class="tablesorter table-condensed table-hover">
+					<tr ng-repeat="session in $data"
+						ng-class="session.achieved ? 'achieved' : ''">
+						<td data-title="'Bagger'" sortable="'baggerName'">{{session.baggerName}}</td>
+
+						<td data-title="'Titre'" sortable="'title'">{{session.title}}</td>
+						<td data-title="'Résumé'" sortable="'summary'"><div
+								ng-bind-html="session.summary"></div></td>
+						<td data-title="'Tags'" sortable="'tags'">{{session.tags}}</td>
+						<td data-title="'Actions'">
+							<button type="button" class="btn btn-default"
+								ng-hide="session.voted" ng-click="vote(session)"
+								ng-disabled="session.achieved">
+								<span class="glyphicon glyphicon-heart-empty"></span> Ça
+								m'intéresse !
+							</button>
+							<button type="button" class="btn btn-default"
+								ng-show="session.voted" ng-click="unvote(session)"
+								ng-disabled="session.achieved">
+								<span class="glyphicon glyphicon-heart"></span> Ça ne
+								m'intéresse plus !
+							</button>
+						</td>
+						<td data-title="'Votes'" sortable="'voterNumber'">
+							<div bs-popover data-content="'{{session.voterNames}}'"
+								data-trigger="hover">{{session.voterNumber}}</div>
+						</td>
+					</tr>
+				</table>
+			</div>
 		</div>
 	</div>
 	<div class="row">

@@ -112,10 +112,18 @@ angular.module('bblorganizer').controller('HomeCtrl', function ($scope, $http, $
 	var firstTime = true;
 	$scope.$watch('sessionsFilter', function(sessionsFilter) {
 		if (!firstTime) { // ignore first time because ng-table doesn't like .reload() on first time...
-			var searchableSessionsFilter = sessionsFilter ? toSearchable(sessionsFilter) : null;
+			var searchableSessionsFilters = sessionsFilter ? toSearchable(sessionsFilter).split(/\s+/g) : null;
 			// filter on sessions with the filter input
 			filteredSessions = $filter('filter')(sessions, function(session) {
-				return searchableSessionsFilter ? session.searchableText.indexOf(searchableSessionsFilter) > -1 : true;
+				if (searchableSessionsFilters) {
+					var matchAll = true;
+					for (var i = 0 ; i < searchableSessionsFilters.length ; i++) {
+						matchAll = matchAll && session.searchableText.indexOf(searchableSessionsFilters[i]) > -1;
+					}
+					return matchAll;
+				} else {
+					return true;
+				}
 			});
 			$scope.tableParams.total(filteredSessions.length);
 			$scope.tableParams.page(1);

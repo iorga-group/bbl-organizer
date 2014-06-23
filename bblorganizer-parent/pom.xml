@@ -38,8 +38,7 @@
 	</profiles>
 
 	<modules>
-		<module>../iraj-bom</module>
-		<module>../irajblank-web</module>
+		<module>../bblorganizer-web</module>
 	</modules>
 
 	<build>
@@ -110,6 +109,12 @@
 				<groupId>org.liquibase</groupId>
 				<artifactId>liquibase-cdi</artifactId>
 				<version>${version.liquibase}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.iorga.cas</groupId>
+				<artifactId>iorga-cas-client</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>compile</scope>
 			</dependency>
 			<!-- Runtime -->
 			<dependency>

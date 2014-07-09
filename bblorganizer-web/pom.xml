@@ -10,32 +10,6 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../bblorganizer-parent/pom.xml</relativePath>
 	</parent>
-	<properties>
-		<pom.casfilter.serverName>http://dev.iorga.com:8080</pom.casfilter.serverName>
-		<pom.casfilter.casServerUrlPrefix>https://sso.iorga.com/cas</pom.casfilter.casServerUrlPrefix>
-	</properties>
-	<profiles>
-		<profile>
-			<id>env-dev</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-			</properties>
-		</profile>
-		<profile>
-			<id>env-prod</id>
-			<activation>
-				<property>
-					<name>env</name>
-					<value>prod</value>
-				</property>
-			</activation>
-			<properties>
-				<pom.casfilter.serverName>http://www.iorga.com</pom.casfilter.serverName>
-			</properties>
-		</profile>
-	</profiles>
 	<dependencies>
 		<dependency>
 			<groupId>com.iorga</groupId>
@@ -68,6 +42,10 @@
 		<dependency>
 			<groupId>com.iorga.cas</groupId>
 			<artifactId>iorga-cas-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
 		</dependency>
 		<!-- Provided -->
 		<dependency>
@@ -140,6 +118,12 @@
 							<directory>src/main/webapp/WEB-INF</directory>
 							<includes>
 								<include>.faces-config.xml.jsfdia</include>
+							</includes>
+						</fileset>
+						<fileset>
+							<directory>src/main/resources</directory>
+							<includes>
+								<include>config.properties</include>
 							</includes>
 						</fileset>
 					</filesets>

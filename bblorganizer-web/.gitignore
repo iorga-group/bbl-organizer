@@ -7,3 +7,4 @@
 /node_modules
 .sass-cache
 .tmp/
+/src/main/resources/config.properties

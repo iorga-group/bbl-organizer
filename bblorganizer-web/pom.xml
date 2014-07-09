@@ -142,6 +142,7 @@
 							</includes>
 						</resource>
 					</webResources>
+					<warName>bblorganizer</warName>
 				</configuration>
 			</plugin>
 		</plugins>

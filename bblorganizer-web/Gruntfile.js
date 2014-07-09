@@ -238,11 +238,15 @@ module.exports = function (grunt) {
 	    }
 	});
 	
-	grunt.registerTask('serve', [
+	grunt.registerTask('simpleBuild', [
 		'bower',
 		'concurrent:server',
 		'bowerInstall',
-		'injector',
+		'injector'
+	]);
+	
+	grunt.registerTask('serve', [
+		'simpleBuild',
 		'watch'
 	]);
 

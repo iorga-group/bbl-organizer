@@ -52,24 +52,29 @@ angular.module('bblorganizer').controller('HomeCtrl', function ($scope, $http, $
 		return unorm.nfd(text).replace(combining, '').toLowerCase();
 	}
 	
+	// init baggers sessions
 	angular.forEach(data.baggers, function(bagger) {
-		angular.forEach(bagger.sessions, function(session) {
-			session.baggerName = bagger.name;
-			session.tags = bagger.tags.join(', ');
-			session.votes = {}; // field : username, value : true
-			session.voterNumber = 0;
-			session.voterNames = '';
-			
-			// create the search field for "sessionsFilter"
-			session.searchableText =
-				toSearchable(session.baggerName)+':'+
-				toSearchable(session.title)+':'+
-				toSearchable(session.summary)+':'+
-				toSearchable(session.tags);
-			
-			sessions.push(session);
-			
-			sessionsPerKey[bagger.name+':'+session.title] = session;
+		angular.forEach(bagger.cities, function(city) {
+			if (city === 'Paris' || city === 'Versailles') { // filtering on city
+				angular.forEach(bagger.sessions, function(session) {
+					session.baggerName = bagger.name;
+					session.tags = bagger.tags.join(', ');
+					session.votes = {}; // field : username, value : true
+					session.voterNumber = 0;
+					session.voterNames = '';
+					
+					// create the search field for "sessionsFilter"
+					session.searchableText =
+						toSearchable(session.baggerName)+':'+
+						toSearchable(session.title)+':'+
+						toSearchable(session.summary)+':'+
+						toSearchable(session.tags);
+					
+					sessions.push(session);
+					
+					sessionsPerKey[bagger.name+':'+session.title] = session;
+				});
+			}
 		});
 	});
 

@@ -3,7 +3,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="logo">
-					<img src="images/logo.png" width="120" height="120"/>
+					<img src="images/logo.png"/>
 					<div class="title">Brown Bag Lunch</div>
 					
 				</div>
@@ -15,6 +15,10 @@
 				<form>
 					<input id="filter" placeholder="Filtre" class="form-control"
 						type="search" ng-model="sessionsFilter" autofocus="autofocus" >
+						
+					<button type="button" class="btn btn-large" ng-click="downloadCSV()">
+						<span class="glyphicon glyphicon-download"></span>
+					</button>	
 				</form>
 			</div>
 		</div>
@@ -35,21 +39,22 @@
 						<td data-title="'Résumé'" sortable="'summary'"><div
 								ng-bind-html="session.summary"></div></td>
 						<td data-title="'Tags'" sortable="'tags'">{{session.tags}}</td>
-						<td data-title="'Actions'">
-							<button type="button" class="btn btn-default"
+						<td data-title="'Actions'" style="text-align:center">
+							<button type="button" class="btn btn-large"
 								ng-hide="session.voted" ng-click="vote(session)"
-								ng-disabled="session.achieved">
-								<span class="glyphicon glyphicon-heart-empty"></span> Ça
-								m'intéresse !
+								ng-disabled="session.achieved"  bs-popover data-content="J'aime!"
+								data-trigger="hover">
+								<span class="glyphicon glyphicon-heart-empty"></span>
 							</button>
-							<button type="button" class="btn btn-default"
+							<button type="button" class="btn btn-large"
 								ng-show="session.voted" ng-click="unvote(session)"
-								ng-disabled="session.achieved">
-								<span class="glyphicon glyphicon-heart"></span> Ça ne
-								m'intéresse plus !
+								ng-disabled="session.achieved" bs-popover data-content="Je n'aime plus!"
+								data-trigger="hover">
+								<span class="glyphicon glyphicon-heart"></span>
+								
 							</button>
 						</td>
-						<td data-title="'Votes'" sortable="'voterNumber'">
+						<td data-title="'Votes'" sortable="'voterNumber'" style="text-align:center">
 							<div bs-popover data-content="'{{session.voterNames}}'"
 								data-trigger="hover">{{session.voterNumber}}</div>
 						</td>
@@ -58,9 +63,11 @@
 			</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<button type="button" class="btn btn-default" ng-click="downloadCSV()">Télécharger en CSV</button>
-		</div>
-	</div>
+
 </div>
+
+   <section class="footer">
+
+        <img src="images/iorgalabs.png" alt="Iorga labs" class="imgFooter">
+        <p>Provided by iOrga Labs</p>
+      </section>

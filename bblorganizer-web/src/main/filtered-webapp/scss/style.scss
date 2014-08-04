@@ -41,7 +41,7 @@ tr.achieved {
 
 .form-control {
 	display: block;
-	width: 100%;
+	width: 90%;
 	height: 34px;
 	padding: 6px 12px;
 	font-size: 14px;
@@ -138,9 +138,28 @@ table .headerSortUp, table .headerSortDown {
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
 }
 
-/*
-.ng-table th.sortable.sort-desc, .ng-table th.sortable.sort-asc {
-background-color: #BAD15B;
-text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
-}*/
+img {
+	max-height:120px;
+	max-width:120px;
+}
 
+.footer {
+  background: gray;
+  color: white;
+  position: relative;
+  
+  padding: 20px 0;
+}
+
+.imgFooter {
+  color: orange;
+  position: absolute;
+  left: 3%;
+  bottom: 0;
+  max-height:120px;
+ max-width:120px;
+}
+
+p {
+  text-align: center;
+}

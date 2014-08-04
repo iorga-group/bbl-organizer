@@ -36,7 +36,9 @@
 					class="tablesorter table-condensed table-hover">
 					<tr ng-repeat="session in $data"
 						ng-class="session.achieved ? 'achieved' : ''">
-						<td data-title="'Bagger'" sortable="'baggerName'">{{session.baggerName}}</td>
+						<td data-title="'Bagger'" sortable="'baggerName'">
+							<a href="{{session.baggerURL}}" target="_blank">{{session.baggerName}}</a>
+						</td>
 
 						<td data-title="'Titre'" sortable="'title'">{{session.title}}</td>
 						<td data-title="'Résumé'" sortable="'summary'"><div

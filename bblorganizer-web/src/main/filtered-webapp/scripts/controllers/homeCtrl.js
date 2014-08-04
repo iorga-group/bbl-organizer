@@ -57,22 +57,28 @@ angular.module('bblorganizer').controller('HomeCtrl', function ($scope, $http, $
 		angular.forEach(bagger.cities, function(city) {
 			if (city === 'Paris' || city === 'Versailles') { // filtering on city
 				angular.forEach(bagger.sessions, function(session) {
-					session.baggerName = bagger.name;
-					session.tags = bagger.tags.join(', ');
-					session.votes = {}; // field : username, value : true
-					session.voterNumber = 0;
-					session.voterNames = '';
+					var sessionKey = bagger.name+':'+session.title;
 					
-					// create the search field for "sessionsFilter"
-					session.searchableText =
-						toSearchable(session.baggerName)+':'+
-						toSearchable(session.title)+':'+
-						toSearchable(session.summary)+':'+
-						toSearchable(session.tags);
-					
-					sessions.push(session);
-					
-					sessionsPerKey[bagger.name+':'+session.title] = session;
+					if (!sessionsPerKey[sessionKey]) { // register only the first session found if a single person have multiple authorized cities
+						session.baggerName = bagger.name;
+						session.tags = bagger.tags.join(', ');
+						session.votes = {}; // field : username, value : true
+						session.voterNumber = 0;
+						session.voterNames = '';
+						
+						// create the search field for "sessionsFilter"
+						session.searchableText =
+							toSearchable(session.baggerName)+':'+
+							toSearchable(session.title)+':'+
+							toSearchable(session.summary)+':'+
+							toSearchable(session.tags);
+						
+						session.baggerURL = 'http://www.brownbaglunch.fr/baggers.html#'+bagger.name.replace(/ /g, '_')+'_'+city;
+						
+						sessions.push(session);
+						
+						sessionsPerKey[sessionKey] = session;
+					}
 				});
 			}
 		});

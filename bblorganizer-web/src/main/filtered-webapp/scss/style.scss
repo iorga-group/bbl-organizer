@@ -100,6 +100,12 @@ header input[type=search], header input[type=search]:focus {
 	border: 1px solid white;
 }
 
+header button.btn-download {
+	font-size: 20px;
+	padding: 13px 10px 9px 10px;
+	margin-left: 10px;
+}
+
 /* tables */
 table.tablesorter {
     background-color:#BAD15B;

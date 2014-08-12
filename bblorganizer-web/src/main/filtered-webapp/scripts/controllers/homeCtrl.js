@@ -48,8 +48,43 @@ angular.module('bblorganizer').controller('HomeCtrl', function ($scope, $http, $
 	*/
 
 	var combining = /[\u0300-\u036F]/g; // Use XRegExp('\\p{M}', 'g');
-	function toSearchable(text) {
+	
+	function removeAccentThenLowerCase(text) {
 		return unorm.nfd(text).replace(combining, '').toLowerCase();
+	}
+	
+	function toSearchable(text) {
+		// remove accent then lower case and delete HTML markup
+		return removeAccentThenLowerCase(text).replace(/(<[^>]*?>)/g, '');
+	}
+	
+	function toSearchableSameLength(text) {
+		// remove accent then lower case
+		text = removeAccentThenLowerCase(text);
+		// remove HTML markup, replace by space in order to have the same length than the original string
+		var re = /(<[^>]*?>)/g;
+		var result = null, newText = '', lastMatch = 0;
+		while ((result = re.exec(text)) !== null) {
+			newText += text.substring(lastMatch, result.index); // add orig text until match
+			newText += new Array(re.lastIndex - result.index + 1).join(' '); // replace by spaces, thanks to http://stackoverflow.com/a/14343876/535203
+			lastMatch = re.lastIndex;
+		}
+		newText += text.substring(lastMatch); // add last part
+		return newText;
+	}
+	
+	var searchableFields = [
+		'baggerName',
+		'title',
+		'summary',
+		'tags'
+	];
+	
+	function initSessionDisplayableData(session) {
+		session.displayableData = {};
+		angular.forEach(searchableFields, function(searchableField) {
+			session.displayableData[searchableField] = session[searchableField];
+		});
 	}
 	
 	// init baggers sessions
@@ -67,11 +102,13 @@ angular.module('bblorganizer').controller('HomeCtrl', function ($scope, $http, $
 						session.voterNames = '';
 						
 						// create the search field for "sessionsFilter"
-						session.searchableText =
-							toSearchable(session.baggerName)+':'+
-							toSearchable(session.title)+':'+
-							toSearchable(session.summary)+':'+
-							toSearchable(session.tags);
+						var searchableTexts = [];
+						angular.forEach(searchableFields, function(searchableField) {
+							searchableTexts.push(toSearchable(session[searchableField]));
+						});
+						session.searchableText = searchableTexts.join(':');
+						
+						initSessionDisplayableData(session);
 						
 						session.baggerURL = 'http://www.brownbaglunch.fr/baggers.html#'+bagger.name.replace(/ /g, '_')+'_'+city;
 						
@@ -102,7 +139,11 @@ angular.module('bblorganizer').controller('HomeCtrl', function ($scope, $http, $
 			}
 		});
 	});
-	
+
+	var firstTime = true;
+	function toSearchableSessionsFilters(sessionsFilter) {
+		return sessionsFilter ? toSearchable(sessionsFilter).split(/\s+/g) : null;
+	}
 	$scope.tableParams = new ngTableParams({
 		page : 1, // show first page
 		count : 10, // count per page
@@ -115,15 +156,49 @@ angular.module('bblorganizer').controller('HomeCtrl', function ($scope, $http, $
 			// use build-in angular filter
 			var orderedData = params.sorting() ? $filter('orderBy') (filteredSessions, params.orderBy()) : sessions;
 			
-			//var orderedData = params.sorting() ? $filter('orderBy') (sessions, params.orderBy()) : sessions;
-			$defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+			var sessionsToDisplay = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+			
+			// let's highlight the content to display with the searchableSessionsFilters if any
+			var sessionsFilter = $scope.sessionsFilter;
+			if (!firstTime) {
+				var searchableSessionsFilters = toSearchableSessionsFilters(sessionsFilter);
+				angular.forEach(sessionsToDisplay, function(session) {
+					if (session.displayableData.sessionsFilter !== sessionsFilter) {
+						// this session highlights has not been already computed for that session filters
+						angular.forEach(searchableFields, function(searchableField) {
+							var origField = session[searchableField];
+							var searchField = toSearchableSameLength(origField);
+							// search for any of the filters, flank them by \u0002 & \u0003 in order to later replace them in the orig field by highlight spans
+							if (searchableSessionsFilters) {
+								searchField = searchField.replace(new RegExp('('+searchableSessionsFilters.join('|')+')', 'g'), '\u0002$1\u0003');
+							}
+							// now iterate on matching parts in the searchField, replace them in the origField with highlight spans
+							var numberOfBoundaries = 0, searchIndex = -1, origIndex = 0, newField = '';
+							while ((searchIndex = searchField.indexOf('\u0002', searchIndex + 1)) > -1) {
+								newField += origField.substring(origIndex, searchIndex - numberOfBoundaries)+'<span class="highlight">';
+								origIndex = searchIndex - numberOfBoundaries;
+								numberOfBoundaries++;
+								searchIndex = searchField.indexOf('\u0003', searchIndex);
+								newField += origField.substring(origIndex, searchIndex - numberOfBoundaries)+'</span>';
+								origIndex = searchIndex - numberOfBoundaries;
+								numberOfBoundaries++;
+							}
+							// copy the last part of the origField
+							newField += origField.substring(origIndex);
+							// and finaly replace the displayable field
+							session.displayableData[searchableField] = newField;
+						});
+						session.displayableData.sessionsFilter = sessionsFilter;
+					}
+				});
+			}
+			$defer.resolve(sessionsToDisplay);
 		}
 	});
 	
-	var firstTime = true;
 	$scope.$watch('sessionsFilter', function(sessionsFilter) {
 		if (!firstTime) { // ignore first time because ng-table doesn't like .reload() on first time...
-			var searchableSessionsFilters = sessionsFilter ? toSearchable(sessionsFilter).split(/\s+/g) : null;
+			var searchableSessionsFilters = toSearchableSessionsFilters(sessionsFilter);
 			// filter on sessions with the filter input
 			filteredSessions = $filter('filter')(sessions, function(session) {
 				if (searchableSessionsFilters) {

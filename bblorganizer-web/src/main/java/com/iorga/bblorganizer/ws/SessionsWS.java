@@ -1,24 +1,30 @@
 package com.iorga.bblorganizer.ws;
 
-import java.util.List;
+import com.iorga.bblorganizer.model.entity.SessionMetadata;
+import com.iorga.bblorganizer.service.SessionMetadataService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-
-import com.iorga.bblorganizer.model.entity.AchievedSession;
-import com.iorga.bblorganizer.service.AchievedSessionService;
+import java.util.List;
 
 @ApplicationScoped
 @Path("/sessions")
 public class SessionsWS {
-	@Inject
-	private AchievedSessionService achievedSessionService;
+    @Inject
+    private SessionMetadataService sessionMetadataService;
 
-	@GET
-	@Path("/achieved")
-	public List<AchievedSession> listAchievedSessions() {
-		return achievedSessionService.findAll();
-	}
+    @GET
+    @Path("/list")
+    public List<SessionMetadata> list() {
+        return sessionMetadataService.findAll();
+    }
+
+    @POST
+    @Path("/create")
+    public List<SessionMetadata> create(List<SessionMetadata> sessionMetadatas) {
+        return sessionMetadataService.create(sessionMetadatas);
+    }
 }

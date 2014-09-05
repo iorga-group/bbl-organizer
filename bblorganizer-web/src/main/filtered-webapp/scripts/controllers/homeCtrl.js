@@ -106,7 +106,7 @@ angular.module('bblorganizer').controller('HomeCtrl', function ($scope, $http, $
 						angular.forEach(searchableFields, function(searchableField) {
 							searchableTexts.push(toSearchable(session[searchableField]));
 						});
-						session.searchableText = searchableTexts.join(':');
+						session.searchableText = searchableTexts.join('\u001d');
 						
 						initSessionDisplayableData(session);
 						

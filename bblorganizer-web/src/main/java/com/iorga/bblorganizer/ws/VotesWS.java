@@ -1,6 +1,7 @@
 package com.iorga.bblorganizer.ws;
 
-import java.util.List;
+import com.iorga.bblorganizer.model.entity.Vote;
+import com.iorga.bblorganizer.service.VoteService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -9,9 +10,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
-
-import com.iorga.bblorganizer.model.entity.Vote;
-import com.iorga.bblorganizer.service.VoteService;
+import java.util.List;
 
 @ApplicationScoped
 @Path("/votes")
@@ -20,32 +19,25 @@ public class VotesWS {
 	private VoteService voteService;
 
 	public static class VotesVoteRequest {
-		private String baggerName;
-		private String sessionTitle;
+		private long idSessionMetadata;
 
-		public String getBaggerName() {
-			return baggerName;
-		}
-		public void setBaggerName(String baggerName) {
-			this.baggerName = baggerName;
-		}
-		public String getSessionTitle() {
-			return sessionTitle;
-		}
-		public void setSessionTitle(String sessionTitle) {
-			this.sessionTitle = sessionTitle;
-		}
-	}
+        public long getIdSessionMetadata() {
+            return idSessionMetadata;
+        }
+        public void setIdSessionMetadata(long idSessionMetadata) {
+            this.idSessionMetadata = idSessionMetadata;
+        }
+    }
 	@POST
 	@Path("/vote")
 	public void vote(@Context HttpServletRequest httpRequest, VotesVoteRequest request) {
-		voteService.create(request.getBaggerName(), request.getSessionTitle(), httpRequest.getUserPrincipal().getName());
+		voteService.create(request.getIdSessionMetadata(), httpRequest.getUserPrincipal().getName());
 	}
 
 	@POST
 	@Path("/unvote")
 	public void unvote(@Context HttpServletRequest httpRequest, VotesVoteRequest request) {
-		voteService.delete(request.getBaggerName(), request.getSessionTitle(), httpRequest.getUserPrincipal().getName());
+		voteService.delete(request.getIdSessionMetadata(), httpRequest.getUserPrincipal().getName());
 	}
 
 	//TODO not used

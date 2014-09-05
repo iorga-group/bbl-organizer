@@ -3,8 +3,10 @@ bin
 .settings
 .project
 .classpath
+.idea
 test-output
 *.jsfdia
+*.iml
 irajblank-web/src/main/resources/META-INF/persistence.xml
 irajblank-web/src/main/resources/META-INF/context.xml
 *~

@@ -1,12 +1,11 @@
 package com.iorga.bblorganizer.ws;
 
-import java.security.Principal;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
+import java.security.Principal;
 
 @ApplicationScoped
 @Path("/authentication")

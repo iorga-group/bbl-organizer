@@ -28,19 +28,18 @@ public class VoteService {
 		@Override
 		public Vote map(int index, ResultSet resultSet, StatementContext ctx) throws SQLException {
 			final Vote vote = new Vote();
-			vote.setBaggerName(resultSet.getString("BAGGER_NAME"));
-			vote.setSessionTitle(resultSet.getString("SESSION_TITLE"));
+			vote.setIdSessionMetadata(resultSet.getLong("ID_SESSION_METADATA"));
 			vote.setUserName(resultSet.getString("USER_NAME"));
 			return vote;
 		}
 	}
 
 	private static interface Queries {
-		@SqlUpdate("insert into VOTE(BAGGER_NAME, SESSION_TITLE, USER_NAME, VOTE_DATE) values (:baggerName, :sessionTitle, :userName, now())")
-		void insertVote(@Bind("baggerName") String baggerName, @Bind("sessionTitle") String sessionTitle, @Bind("userName") String userName);
+		@SqlUpdate("insert into VOTE(ID_SESSION_METADATA, USER_NAME, VOTE_DATE) values (:idSessionMetadata, :userName, now())")
+		void insertVote(@Bind("idSessionMetadata") long idSessionMetadata, @Bind("userName") String userName);
 
-		@SqlUpdate("delete from VOTE where BAGGER_NAME = :baggerName and SESSION_TITLE = :sessionTitle and USER_NAME = :userName")
-		void deleteVote(@Bind("baggerName") String baggerName, @Bind("sessionTitle") String sessionTitle, @Bind("userName") String userName);
+		@SqlUpdate("delete from VOTE where ID_SESSION_METADATA = :idSessionMetadata and USER_NAME = :userName")
+		void deleteVote(@Bind("idSessionMetadata") long idSessionMetadata, @Bind("userName") String userName);
 
 		//TODO not used
 		@SqlQuery("select * from VOTE where USER_NAME = :userName")
@@ -52,17 +51,17 @@ public class VoteService {
 		List<Vote> findAll();
 	}
 
-	public void create(String baggerName, String sessionTitle, String userName) {
+	public void create(long idSessionMetadata, String userName) {
 		try (Handle handle = dbi.open()) {
 			Queries queries = handle.attach(Queries.class);
-			queries.insertVote(baggerName, sessionTitle, userName);
+			queries.insertVote(idSessionMetadata, userName);
 		}
 	}
 
-	public void delete(String baggerName, String sessionTitle, String userName) {
+	public void delete(long idSessionMetadata, String userName) {
 		try (Handle handle = dbi.open()) {
 			Queries queries = handle.attach(Queries.class);
-			queries.deleteVote(baggerName, sessionTitle, userName);
+			queries.deleteVote(idSessionMetadata, userName);
 		}
 	}
 

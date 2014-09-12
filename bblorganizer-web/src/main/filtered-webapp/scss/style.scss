@@ -35,8 +35,8 @@ header {
 	margin-bottom: 20px;
 }
 
-tr.achieved {
-	background-color: #999999;
+table.tablesorter tbody tr.achieved > td {
+	background-color: #dddddd;
 }
 
 .form-control {

@@ -26,40 +26,46 @@
 		</div>
 	</div>
 </header>
-<div class="container">
-	<div class="container-fluid">
-		<br />
-		<div class="row">
-			<div class="col-md-12">
-				<table ng-table="tableParams" class="tablesorter table-condensed table-hover">
-					<tr ng-repeat="session in $data" ng-class="session.achieved ? 'achieved' : ''">
-						<td data-title="'Bagger'" sortable="'baggerName'">
-							<a href="{{session.baggerURL}}" target="_blank">
-								<span ng-bind-html="session.displayableData.baggerName"></span>
-							</a>
-						</td>
-						<td data-title="'Titre'" sortable="'title'"><span ng-bind-html="session.displayableData.title"></span></td>
-						<td data-title="'Résumé'" sortable="'summary'"><span ng-bind-html="session.displayableData.summary"></span></td>
-						<td data-title="'Tags'" sortable="'tags'"><span ng-bind-html="session.displayableData.tags"></span></td>
-						<td data-title="'Actions'" style="text-align: center">
-							<button type="button" class="btn btn-default btn-large" ng-hide="session.voted" ng-click="vote(session)"
-								ng-disabled="session.achieved" bs-popover data-content="J'aime!" data-trigger="hover">
-								<span class="glyphicon glyphicon-heart-empty"></span>
-							</button>
-							<button type="button" class="btn btn-default btn-large" ng-show="session.voted" ng-click="unvote(session)"
-								ng-disabled="session.achieved" bs-popover data-content="Je n'aime plus!" data-trigger="hover">
-								<span class="glyphicon glyphicon-heart"></span>
-							</button>
-						</td>
-						<td data-title="'Votes'" sortable="'voterNumber'" style="text-align: center">
-							<div bs-popover data-content="'{{session.voterNames}}'" data-trigger="hover">{{session.voterNumber}}</div>
-						</td>
-					</tr>
-				</table>
-			</div>
-		</div>
-	</div>
-
+<div class="container-fluid">
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <table ng-table="tableParams" class="tablesorter table-condensed table-hover">
+                <tr ng-repeat="session in $data" ng-class="session.achieved ? 'achieved' : ''">
+                    <td data-title="'Bagger'" sortable="'baggerName'">
+                        <a href="{{session.baggerURL}}" target="_blank">
+                            <span ng-bind-html="session.displayableData.baggerName"></span>
+                        </a>
+                    </td>
+                    <td data-title="'Titre'" sortable="'title'"><span style="font-weight: bold" ng-bind-html="session.displayableData.title"></span></td>
+                    <td data-title="'Résumé'" sortable="'summary'"><span ng-bind-html="session.displayableData.summary"></span></td>
+                    <td data-title="'Tags'" sortable="'tags'"><span ng-bind-html="session.displayableData.tags"></span></td>
+                    <td data-title="'Added date'" sortable="'creationDate'">
+                        {{session.creationDate}}
+                    </td>
+                    <td data-title="'Planned date'" sortable="'plannedDate'">
+                        {{session.plannedDate}}
+                    </td>
+                    <td data-title="'Achievement date'" sortable="'achievementDate'">
+                        {{session.achievementDate}}
+                    </td>
+                    <td data-title="'Actions'" style="text-align: center">
+                        <button type="button" class="btn btn-default btn-large" ng-hide="session.voted" ng-click="vote(session)"
+                            ng-disabled="session.achieved" bs-popover data-content="J'aime!" data-trigger="hover" data-placement="left">
+                            <span class="glyphicon glyphicon-heart-empty"></span>
+                        </button>
+                        <button type="button" class="btn btn-default btn-large" ng-show="session.voted" ng-click="unvote(session)"
+                            ng-disabled="session.achieved" bs-popover data-content="Je n'aime plus!" data-trigger="hover" data-placement="left">
+                            <span class="glyphicon glyphicon-heart"></span>
+                        </button>
+                    </td>
+                    <td data-title="'Votes'" sortable="'voterNumber'" style="text-align: center">
+                        <div bs-popover data-content="'{{session.voterNames}}'" data-trigger="hover" data-placement="left">{{session.voterNumber}}</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
 
 <section class="footer">

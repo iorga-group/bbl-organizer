@@ -12,10 +12,10 @@ module.exports = function (grunt) {
 				files: ['src/main/filtered-webapp/scss/{,*/}*.{scss,sass}'],
 				tasks: ['compass:server']
 			},
-			styles: {
-				files: ['src/main/webapp/styles/{,*/}*.css'],
-				tasks: ['autoprefixer']
-			},
+//			styles: {
+//				files: ['src/main/webapp/styles/{,*/}*.css'],
+//				tasks: ['autoprefixer']
+//			},
 			js: {
 				files: ['src/main/filtered-webapp/scripts/**/{,*/}*.js'],
 				tasks: ['jshint:all','copy:js']

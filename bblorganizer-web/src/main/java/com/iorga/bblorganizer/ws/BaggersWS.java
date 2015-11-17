@@ -16,7 +16,7 @@ public class BaggersWS {
 	@GET
 	@Path("")
 	public String getBaggers() throws MalformedURLException, IOException {
-		String baggers = IOUtils.toString(new URL("http://www.brownbaglunch.fr/js/baggers.js").openStream());
+		String baggers = IOUtils.toString(new URL("http://data.brownbaglunch.fr/baggers.js").openStream());
 
 		int firstIndex = baggers.indexOf('{');
 		int lastIndex = baggers.lastIndexOf('}');
